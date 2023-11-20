@@ -12,7 +12,7 @@
                 </p>
                 <img src="<%- product.productData.imageUrl %>" alt="">
                 <form action="/cart-delete-item" method="POST">
-                    <input type="hidden" value="<%= product.productData.id %>" name="productId">
+                    <input type="hidden" value="<%= product.productData._id %>" name="productId">
                     <button class="btn" type="submit">Delete</button>
                 </form>
             </li>

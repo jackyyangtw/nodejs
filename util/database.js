@@ -2,7 +2,7 @@ const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
 let _db;
-const uri = 'mongodb+srv://jackyyang:<password>@cluster0.yt03ehm.mongodb.net/?retryWrites=true&w=majority&maxPoolSize=200'
+const uri = 'mongodb+srv://jackyyang:Yy0931941514@cluster0.yt03ehm.mongodb.net/?retryWrites=true&w=majority&maxPoolSize=200'
 
 
 const mongoConnect = callback => {

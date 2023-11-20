@@ -3,12 +3,11 @@ const Cart = require('../models/cart');
 
 // https://expressjs.com/en/guide/using-middleware.html
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll((products) => {
+    Product.fetchAll().then((products)=>{
         res.render('shop/product-list', {
             products,
-            docTitle: 'Shop',
+            pageTitle: 'All Products',
             path: '/products',
-            hasProducts: products.length > 0,
             activeShop: true,
             productCSS: true,
             formsCss: true
@@ -18,10 +17,11 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const productId = req.params.productId;
-    Product.findById(productId, product => {
+    Product.findById(productId).then((product)=>{
+        console.log(product,'product');
         res.render('shop/product-details', {
             product,
-            docTitle: product.title,
+            pageTitle: product.title,
             path: '/products',
             activeShop: true,
             productCSS: true,
@@ -35,7 +35,7 @@ exports.getIndex = (req, res, next) => {
     Product.fetchAll((products) => {
         res.render('shop/index', {
             products,
-            docTitle: 'Shop',
+            pageTitle: 'Shop',
             path: '/',
             hasProducts: products.length > 0,
             activeShop: true,
@@ -50,7 +50,7 @@ exports.getCart = (req, res, next) => {
         Product.fetchAll(products => {
             const cartProducts = [];
             for (let product of products) {
-                const cartProductData = cart.products.find(prod => prod.id === product.id);
+                const cartProductData = cart.products.find(prod => prod._id === product._id);
                 if (cartProductData) {
                     cartProducts.push({
                         productData: product,
@@ -59,7 +59,7 @@ exports.getCart = (req, res, next) => {
                 }
             }
             res.render('shop/cart', {
-                docTitle: 'Your Cart',
+                pageTitle: 'Your Cart',
                 path: '/cart',
                 activeCart: true,
                 productCSS: true,
@@ -72,7 +72,7 @@ exports.getCart = (req, res, next) => {
 
 exports.getCheckout = (req, res, next) => {
     res.render('shop/checkout', {
-        docTitle: 'Checkout',
+        pageTitle: 'Checkout',
         path: '/checkout',
         activeCheckout: true,
         productCSS: true,
@@ -82,7 +82,7 @@ exports.getCheckout = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
     res.render('shop/orders', {
-        docTitle: 'Your Orders',
+        pageTitle: 'Your Orders',
         path: '/orders',
         activeOrders: true,
         productCSS: true,
